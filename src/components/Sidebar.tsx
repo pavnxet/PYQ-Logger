@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ChevronRight, ChevronDown, BookOpen, Search } from 'lucide-react';
+import { ChevronRight, ChevronDown, BookOpen, Search, Settings } from 'lucide-react';
 import { Subject, Chapter } from '@/types';
 import { getSubjects, getChapters } from '@/lib/mockData';
 
@@ -105,8 +105,15 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      <div className="mt-auto p-4 border-t border-gray-800 text-xs text-gray-500">
-        v1.0.0
+      <div className="mt-auto p-4 border-t border-gray-800">
+        <Link
+          href="/settings"
+          className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors p-2 rounded-md hover:bg-gray-800"
+        >
+          <Settings className="w-4 h-4" />
+          Settings
+        </Link>
+        <div className="mt-2 text-xs text-gray-600 pl-2">v1.0.0</div>
       </div>
     </aside>
   );

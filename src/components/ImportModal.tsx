@@ -5,6 +5,7 @@ import { X, Upload, AlertTriangle } from 'lucide-react';
 import { Subject, Chapter, Question } from '@/types';
 import { getSubjects, getChapters, addQuestion } from '@/lib/mockData';
 import { parseCSV } from '@/utils/csvParser';
+import { parseTextQuestions } from '@/utils/textParser';
 
 interface ImportModalProps {
   isOpen: boolean;
@@ -38,6 +39,8 @@ export default function ImportModal({ isOpen, onClose, onImportComplete }: Impor
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedChapter, setSelectedChapter] = useState('');
   const [importing, setImporting] = useState(false);
+  const [mode, setMode] = useState<'csv' | 'text'>('csv');
+  const [textInput, setTextInput] = useState('');
 
   useEffect(() => {
     if (isOpen) {
@@ -48,6 +51,8 @@ export default function ImportModal({ isOpen, onClose, onImportComplete }: Impor
       setMapping({});
       setSelectedSubject('');
       setSelectedChapter('');
+      setTextInput('');
+      setMode('csv');
     }
   }, [isOpen]);
 
@@ -167,8 +172,26 @@ export default function ImportModal({ isOpen, onClose, onImportComplete }: Impor
         </div>
 
         <div className="p-6">
-          {/* Step 1: Upload */}
+          {/* Tabs */}
           {step === 1 && (
+            <div className="flex border-b border-gray-200 mb-6">
+              <button
+                className={`px-4 py-2 text-sm font-medium ${mode === 'csv' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                onClick={() => setMode('csv')}
+              >
+                CSV Upload
+              </button>
+              <button
+                className={`px-4 py-2 text-sm font-medium ${mode === 'text' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                onClick={() => setMode('text')}
+              >
+                Paste Text
+              </button>
+            </div>
+          )}
+
+          {/* Step 1: Upload / Input */}
+          {step === 1 && mode === 'csv' && (
             <div className="space-y-6">
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:bg-gray-50 transition-colors">
                 <Upload className="mx-auto h-12 w-12 text-gray-400" />
@@ -190,6 +213,67 @@ export default function ImportModal({ isOpen, onClose, onImportComplete }: Impor
                 <p className="text-xs text-blue-700 mt-1">
                   Your CSV should contain columns for Question Text, Option A, Option B, Option C, Option D, and Correct Answer (A/B/C/D).
                 </p>
+              </div>
+            </div>
+          )}
+
+          {step === 1 && mode === 'text' && (
+            <div className="space-y-6">
+               <textarea
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                placeholder={`1. What is the capital of France?
+A) Berlin
+B) Paris
+C) Rome
+D) Madrid
+Answer: B
+
+2. Next question...`}
+                className="w-full h-64 border border-gray-300 rounded-md p-3 text-sm font-mono focus:ring-blue-500 focus:border-blue-500"
+              />
+               <div className="flex justify-end">
+                <button
+                  onClick={() => {
+                    const parsed = parseTextQuestions(textInput);
+                    if (parsed.length === 0) {
+                      alert('No valid questions found. Check format.');
+                      return;
+                    }
+
+                    const data: Record<string, string>[] = parsed.map(p => ({
+                        'Question Text': p.question_text,
+                        'Option A': p.optionA,
+                        'Option B': p.optionB,
+                        'Option C': p.optionC,
+                        'Option D': p.optionD,
+                        'Correct Answer': p.correct_answer,
+                        'Year': new Date().getFullYear().toString(),
+                        'Exam Name': 'Imported',
+                        'Difficulty': 'Medium'
+                    }));
+
+                    setCsvData(data);
+                    setHeaders(Object.keys(data[0]));
+                    setMapping({
+                        'question_text': 'Question Text',
+                        'optionA': 'Option A',
+                        'optionB': 'Option B',
+                        'optionC': 'Option C',
+                        'optionD': 'Option D',
+                        'correct_answer': 'Correct Answer',
+                        'year': 'Year',
+                        'exam_name': 'Exam Name',
+                        'difficulty': 'Difficulty',
+                        'explanation': 'Explanation' // won't exist but ok
+                    });
+                    setStep(2);
+                  }}
+                  disabled={!textInput.trim()}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+                >
+                  Parse Questions
+                </button>
               </div>
             </div>
           )}

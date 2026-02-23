@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search, UserCircle, Bell } from 'lucide-react';
 import { getQuestions } from '@/lib/mockData';
+import Link from 'next/link';
 
 export default function Header() {
   const [totalQuestions, setTotalQuestions] = useState(0);
@@ -44,9 +45,9 @@ export default function Header() {
           <button className="hover:bg-gray-100 p-2 rounded-full transition-colors">
             <Bell className="w-5 h-5 text-gray-500" />
           </button>
-          <button className="hover:bg-gray-100 p-2 rounded-full transition-colors">
+          <Link href="/profile" className="hover:bg-gray-100 p-2 rounded-full transition-colors">
             <UserCircle className="w-6 h-6 text-gray-600" />
-          </button>
+          </Link>
         </div>
       </div>
     </header>

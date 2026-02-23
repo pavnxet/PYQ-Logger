@@ -10,3 +10,8 @@
 ✓ Ready in 969ms
  GET / 200 in 3.7s (compile: 3.0s, render: 649ms)
  GET / 200 in 99ms (compile: 7ms, render: 91ms)
+ GET / 200 in 2.4s (compile: 1349ms, render: 1091ms)
+○ Compiling /settings ...
+ GET /settings 200 in 5.2s (compile: 5.1s, render: 51ms)
+ GET /profile 200 in 1114ms (compile: 1023ms, render: 91ms)
+ GET / 200 in 78ms (compile: 5ms, render: 73ms)

@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Exam Prep Dashboard
+
+A comprehensive dashboard for managing exam preparation questions, organized by Subject and Chapter.
+
+## Features
+
+*   **Hierarchical Management**: Organize questions by Subject > Chapter.
+*   **Question Bank**: View, filter, and search questions.
+*   **Manual Entry**: Add questions one by one with a rich form.
+*   **Bulk Import**:
+    *   **CSV Import**: Upload CSV files with column mapping.
+    *   **Text Paste**: Paste questions in a standard text format.
+*   **Metadata Management**: Add/Delete Subjects and Chapters via Settings.
+*   **PDF Export**: Select questions ("Bucket") and export them as a PDF (Question Paper + Answer Key).
+*   **Profile Stats**: View activity statistics.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+*   Node.js 18+
+*   npm
+
+### Installation
+
+1.  Clone the repository.
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory and add your Supabase credentials (optional if using mock data):
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+*Note: The application currently runs with a Mock Data layer (`src/lib/mockData.ts`) by default. To switch to Supabase, you would need to uncomment the Supabase client usage in the data fetching functions.*
+
+### Running the App
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Schema
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The required database schema for Supabase is documented in `schema.sql`.
 
-## Learn More
+## Text Import Format
 
-To learn more about Next.js, take a look at the following resources:
+When using "Paste Text" import, use the following format:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+1. What is the capital of France?
+A) Berlin
+B) Paris
+C) Rome
+D) Madrid
+Answer: B
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Next question...
+```

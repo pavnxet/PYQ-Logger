@@ -1,13 +1,13 @@
 import { Subject, Chapter, Question } from '@/types';
 
 // Mock Data
-export const mockSubjects: Subject[] = [
+let mockSubjects: Subject[] = [
   { id: '1', name: 'Geography' },
   { id: '2', name: 'History' },
   { id: '3', name: 'Science' },
 ];
 
-export const mockChapters: Chapter[] = [
+let mockChapters: Chapter[] = [
   { id: '101', subject_id: '1', name: 'Rivers' },
   { id: '102', subject_id: '1', name: 'Mountains' },
   { id: '103', subject_id: '1', name: 'Capitals' },
@@ -17,7 +17,8 @@ export const mockChapters: Chapter[] = [
   { id: '302', subject_id: '3', name: 'Chemistry' },
 ];
 
-export const mockQuestions: Question[] = [
+// eslint-disable-next-line prefer-const
+export let mockQuestions: Question[] = [
   {
     id: 'q1',
     chapter_id: '101',
@@ -46,7 +47,31 @@ export const mockQuestions: Question[] = [
 
 // Helper functions (mocking API calls)
 export const getSubjects = async (): Promise<Subject[]> => {
-  return new Promise((resolve) => setTimeout(() => resolve(mockSubjects), 500));
+  return new Promise((resolve) => setTimeout(() => resolve([...mockSubjects]), 500));
+};
+
+export const addSubject = async (name: string): Promise<Subject> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const newSubject = { id: Math.random().toString(36).substr(2, 9), name };
+      mockSubjects.push(newSubject);
+      resolve(newSubject);
+    }, 500);
+  });
+};
+
+export const deleteSubject = async (id: string): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      mockSubjects = mockSubjects.filter((s) => s.id !== id);
+      // Cascade delete chapters
+      mockChapters = mockChapters.filter((c) => c.subject_id !== id);
+      // Cascade delete questions (optional, but good for consistency)
+      // mockQuestions = mockQuestions.filter(q => !mockChapters.find(c => c.id === q.chapter_id));
+      // Need complex logic to filter questions if chapters are gone. Simplified for now.
+      resolve();
+    }, 500);
+  });
 };
 
 export const getChapters = async (subjectId: string): Promise<Chapter[]> => {
@@ -56,6 +81,25 @@ export const getChapters = async (subjectId: string): Promise<Chapter[]> => {
       500
     )
   );
+};
+
+export const addChapter = async (subjectId: string, name: string): Promise<Chapter> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const newChapter = { id: Math.random().toString(36).substr(2, 9), subject_id: subjectId, name };
+      mockChapters.push(newChapter);
+      resolve(newChapter);
+    }, 500);
+  });
+};
+
+export const deleteChapter = async (id: string): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      mockChapters = mockChapters.filter((c) => c.id !== id);
+      resolve();
+    }, 500);
+  });
 };
 
 export const getQuestions = async (filters: Partial<Question> = {}): Promise<Question[]> => {

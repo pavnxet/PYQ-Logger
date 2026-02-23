@@ -40,7 +40,7 @@ CREATE INDEX idx_questions_exam_name ON questions(exam_name);
 CREATE INDEX idx_questions_year ON questions(year);
 CREATE INDEX idx_chapters_subject_id ON chapters(subject_id);
 
--- RLS (Row Level Security) Policies (Optional, if using Auth)
+-- RLS (Row Level Security) Policies
 ALTER TABLE subjects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chapters ENABLE ROW LEVEL SECURITY;
 ALTER TABLE questions ENABLE ROW LEVEL SECURITY;
@@ -52,3 +52,11 @@ CREATE POLICY "Allow read access for authenticated users" ON questions FOR SELEC
 
 -- Allow write access only to specific users or all authenticated (adjust as needed)
 CREATE POLICY "Allow insert for authenticated users" ON questions FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow update for authenticated users" ON questions FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow delete for authenticated users" ON questions FOR DELETE TO authenticated USING (true);
+
+-- Allow subject/chapter management
+CREATE POLICY "Allow insert subjects" ON subjects FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow delete subjects" ON subjects FOR DELETE TO authenticated USING (true);
+CREATE POLICY "Allow insert chapters" ON chapters FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow delete chapters" ON chapters FOR DELETE TO authenticated USING (true);
