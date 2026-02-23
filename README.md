@@ -2,6 +2,8 @@
 
 A comprehensive dashboard for managing exam preparation questions, organized by Subject and Chapter.
 
+## $\color{red}{\text{I plan to return and continue development at a later date. ⏳}}$
+
 ## Features
 
 *   **Hierarchical Management**: Organize questions by Subject > Chapter.
