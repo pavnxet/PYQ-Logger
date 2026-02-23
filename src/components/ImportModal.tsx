@@ -43,7 +43,6 @@ export default function ImportModal({ isOpen, onClose, onImportComplete }: Impor
     if (isOpen) {
       getSubjects().then(setSubjects);
       setStep(1);
-      setFile(null);
       setCsvData([]);
       setHeaders([]);
       setMapping({});
