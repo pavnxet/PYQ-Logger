@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Search, UserCircle, Bell } from 'lucide-react';
-import { getQuestions } from '@/lib/mockData';
+import { getQuestions } from '@/lib/db';
 import Link from 'next/link';
 
 export default function Header() {

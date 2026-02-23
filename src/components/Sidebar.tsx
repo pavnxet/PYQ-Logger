@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, ChevronDown, BookOpen, Search, Settings } from 'lucide-react';
 import { Subject, Chapter } from '@/types';
-import { getSubjects, getChapters } from '@/lib/mockData';
+import { getSubjects, getChapters } from '@/lib/db';
 
 export default function Sidebar() {
   const [subjects, setSubjects] = useState<Subject[]>([]);

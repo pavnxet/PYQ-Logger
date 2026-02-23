@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Upload, AlertTriangle } from 'lucide-react';
 import { Subject, Chapter, Question } from '@/types';
-import { getSubjects, getChapters, addQuestion } from '@/lib/mockData';
+import { getSubjects, getChapters, addQuestion } from '@/lib/db';
 import { parseCSV } from '@/utils/csvParser';
 import { parseTextQuestions } from '@/utils/textParser';
 

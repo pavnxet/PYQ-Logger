@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { Question } from '@/types';
 
 interface BucketContextType {
@@ -16,21 +16,8 @@ const BucketContext = createContext<BucketContextType | undefined>(undefined);
 export function BucketProvider({ children }: { children: React.ReactNode }) {
   const [bucket, setBucket] = useState<Question[]>([]);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('exam-prep-bucket');
-    if (saved) {
-      try {
-        // eslint-disable-next-line
-        setBucket(JSON.parse(saved));
-      } catch (e) {
-        console.error('Failed to parse bucket from local storage', e);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('exam-prep-bucket', JSON.stringify(bucket));
-  }, [bucket]);
+  // Note: LocalStorage persistence removed as per requirements.
+  // In a real app with Auth, this would sync to a Supabase table.
 
   const addToBucket = (question: Question) => {
     if (!isInBucket(question.id)) {

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Check, Search } from 'lucide-react';
 import { Question } from '@/types';
 import { useBucket } from '@/context/BucketContext';
-import { getQuestions } from '@/lib/mockData';
+import { getQuestions } from '@/lib/db';
 
 export default function QuestionTable() {
   const [questions, setQuestions] = useState<Question[]>([]);

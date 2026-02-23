@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { User, Shield, BookOpen, FileText } from 'lucide-react';
-import { getQuestions } from '@/lib/mockData';
+import { getQuestions } from '@/lib/db';
 
 export default function Profile() {
   const [stats, setStats] = useState({

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, ChevronRight, ChevronDown, Folder, Book } from 'lucide-react';
 import { Subject, Chapter } from '@/types';
-import { getSubjects, getChapters, addSubject, deleteSubject, addChapter, deleteChapter } from '@/lib/mockData';
+import { getSubjects, getChapters, addSubject, deleteSubject, addChapter, deleteChapter } from '@/lib/db';
 
 export default function MetadataManager() {
   const [subjects, setSubjects] = useState<Subject[]>([]);

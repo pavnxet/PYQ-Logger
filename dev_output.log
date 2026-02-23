@@ -15,3 +15,12 @@
  GET /settings 200 in 5.2s (compile: 5.1s, render: 51ms)
  GET /profile 200 in 1114ms (compile: 1023ms, render: 91ms)
  GET / 200 in 78ms (compile: 5ms, render: 73ms)
+  Reload env: .env.local
+ GET / 200 in 2.5s (compile: 1002ms, render: 1468ms)
+ GET /settings 200 in 196ms (compile: 159ms, render: 37ms)
+ GET / 200 in 86ms (compile: 9ms, render: 77ms)
+ GET /settings 200 in 33ms (compile: 6ms, render: 27ms)
+ HEAD /settings 200 in 237ms (compile: 4ms, render: 233ms)
+ GET / 200 in 106ms (compile: 18ms, render: 88ms)
+ GET /settings 200 in 107ms (compile: 13ms, render: 94ms)
+ GET /profile 200 in 455ms (compile: 201ms, render: 254ms)
